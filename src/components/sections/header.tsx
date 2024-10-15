@@ -1,5 +1,11 @@
 import Link from 'next/link'
 import ThemeToggle from '@/components/theme-toggle'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from '../ui/tooltip'
 
 export default function Header() {
   return (
@@ -15,10 +21,24 @@ export default function Header() {
             <Link href='/posts'>Posts</Link>
           </li>
           <li className='transition-colors hover:text-foreground'>
-            <Link href='/projects'>Projects</Link>
+            <TooltipProvider>
+              <Tooltip delayDuration={100}>
+                <TooltipTrigger>
+                  <Link href='#'>Projects</Link>
+                </TooltipTrigger>
+                <TooltipContent side='bottom'>Soon™</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </li>
           <li className='transition-colors hover:text-foreground'>
-            <Link href='/contact'>Contact</Link>
+            <TooltipProvider>
+              <Tooltip delayDuration={100}>
+                <TooltipTrigger>
+                  <Link href='#'>Contact</Link>
+                </TooltipTrigger>
+                <TooltipContent side='bottom'>Soon™</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </li>
         </ul>
 
