@@ -1,7 +1,7 @@
+import MDXContent from '@/components/mdx-content'
 import { getPostBySlug } from '@/lib/posts'
 import { formatDate } from '@/lib/utils'
 import { ArrowLeftIcon } from 'lucide-react'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -52,7 +52,7 @@ export default async function PostPage({
         </header>
 
         <main className='prose mt-16 dark:prose-invert'>
-          <MDXRemote source={content} />
+          <MDXContent source={content} />
         </main>
       </div>
     </section>

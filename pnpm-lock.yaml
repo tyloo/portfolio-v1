@@ -53,6 +53,9 @@ importers:
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
+      sugar-high:
+        specifier: ^0.7.1
+        version: 0.7.1
       tailwind-merge:
         specifier: ^2.5.4
         version: 2.5.4
@@ -2055,6 +2058,9 @@ packages:
     resolution: {integrity: sha512-8EbVDiu9iN/nESwxeSxDKe0dunta1GOlHufmSSXxMD2z2/tMZpDMpvXQGsc+ajGo8y2uYUmixaSRUc/QPoQ0GA==}
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
+
+  sugar-high@0.7.1:
+    resolution: {integrity: sha512-hwEXr/gtUvi+jfgjgxbuiRD5EX5C1/eQrW/RoZ0Dm+993p46ECB5HBjMfc20FEbsXKQHtueHtYoe2ofb6V+83A==}
 
   supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
@@ -4651,6 +4657,8 @@ snapshots:
       mz: 2.7.0
       pirates: 4.0.6
       ts-interface-checker: 0.1.13
+
+  sugar-high@0.7.1: {}
 
   supports-color@5.5.0:
     dependencies:
