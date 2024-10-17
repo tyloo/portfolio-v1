@@ -24,14 +24,7 @@ export default function Header() {
             <Link href='/projects'>Projects</Link>
           </li>
           <li className='transition-colors hover:text-foreground'>
-            <TooltipProvider>
-              <Tooltip delayDuration={100}>
-                <TooltipTrigger>
-                  <Link href='#'>Contact</Link>
-                </TooltipTrigger>
-                <TooltipContent side='bottom'>Soon™</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Link href='/contact'>Contact</Link>
           </li>
         </ul>
 
