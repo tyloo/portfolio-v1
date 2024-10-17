@@ -1,5 +1,5 @@
 import { getPosts } from '@/lib/posts'
-import Posts from './posts'
+import Posts from '@/components/sections/posts'
 import Link from 'next/link'
 
 export default async function RecentPosts() {

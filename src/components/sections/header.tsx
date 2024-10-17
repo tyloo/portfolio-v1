@@ -5,7 +5,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger
-} from '../ui/tooltip'
+} from '@/components/ui/tooltip'
 
 export default function Header() {
   return (
@@ -21,14 +21,7 @@ export default function Header() {
             <Link href='/posts'>Posts</Link>
           </li>
           <li className='transition-colors hover:text-foreground'>
-            <TooltipProvider>
-              <Tooltip delayDuration={100}>
-                <TooltipTrigger>
-                  <Link href='#'>Projects</Link>
-                </TooltipTrigger>
-                <TooltipContent side='bottom'>Soon™</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Link href='/projects'>Projects</Link>
           </li>
           <li className='transition-colors hover:text-foreground'>
             <TooltipProvider>
