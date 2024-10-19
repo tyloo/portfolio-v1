@@ -29,17 +29,17 @@ async function checkRecaptcha(recaptcha: string): Promise<boolean> {
   return response.success
 }
 
-export async function sendEmail(data: ContactFormInputs) {
-  const result = ContactFormSchema.safeParse(data)
+export async function sendEmail(ContactFormInput: ContactFormInputs) {
+  const result = ContactFormSchema.safeParse(ContactFormInput)
 
   if (result.error) {
     return { error: result.error.format() }
   }
 
   try {
-    checkRecaptcha(result.data.captcha)
+    const { name, email, message, captcha } = result.data
+    checkRecaptcha(captcha)
 
-    const { name, email, message } = result.data
     const { data, error } = await resend.emails.send({
       from: `${process.env.CONTACT_SENDER_NAME} <${process.env.CONTACT_SENDER_EMAIL}>`,
       to: [
@@ -60,20 +60,20 @@ export async function sendEmail(data: ContactFormInputs) {
   }
 }
 
-export async function subscribe(data: NewsletterFormInputs) {
-  const result = NewsletterFormSchema.safeParse(data)
+export async function subscribe(newwsletterFormInput: NewsletterFormInputs) {
+  const result = NewsletterFormSchema.safeParse(newwsletterFormInput)
 
   if (result.error) {
     return { error: result.error.format() }
   }
 
   try {
-    checkRecaptcha(result.data.captcha)
+    const { email, captcha } = result.data
+    checkRecaptcha(captcha)
 
-    const { email } = result.data
     const { data, error } = await resend.contacts.create({
-      email: email,
-      audienceId: process.env.RESEND_AUDIENCE_ID as string
+      audienceId: process.env.RESEND_AUDIENCE_ID as string,
+      email: email
     })
 
     if (!data || error) {

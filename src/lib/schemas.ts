@@ -7,10 +7,10 @@ export const ContactFormSchema = z.object({
     .min(2, 'Must be at least 2 characters.'),
   email: z.string().email().min(1, 'Email is required.'),
   message: z.string().min(1, 'Message is required.'),
-  captcha: z.string().min(1, 'Captcha is required.')
+  captcha: z.string()
 })
 
 export const NewsletterFormSchema = z.object({
   email: z.string().email('Invalid email.'),
-  captcha: z.string().min(1, 'Captcha is required.')
+  captcha: z.string()
 })

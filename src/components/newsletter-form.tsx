@@ -20,8 +20,8 @@ export default function NewsletterForm() {
   const [captchaEnabled, setCaptchaEnabled] = useState(false)
 
   const {
-    watch,
     register,
+    watch,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting }
@@ -40,7 +40,9 @@ export default function NewsletterForm() {
   }
 
   const processForm: SubmitHandler<Inputs> = async data => {
-    const result = await subscribe(data)
+    const captcha = (await captchaRef.current?.executeAsync()) as string
+
+    const result = await subscribe({ ...data, captcha })
 
     if (result?.error) {
       toast.error('An error occurred! Please try again.')

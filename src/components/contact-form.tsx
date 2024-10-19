@@ -20,8 +20,8 @@ export default function ContactForm() {
   const [captchaEnabled, setCaptchaEnabled] = useState(false)
 
   const {
-    watch,
     register,
+    watch,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting }
