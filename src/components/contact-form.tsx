@@ -5,16 +5,22 @@ import Link from 'next/link'
 import { toast } from 'sonner'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { ContactFormSchema } from '@/lib/schemas'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { sendEmail } from '@/lib/actions'
+import { useRef, useState } from 'react'
 
 type Inputs = z.infer<typeof ContactFormSchema>
 
 export default function ContactForm() {
+  const captchaRef = useRef<ReCAPTCHA>(null)
+  const [captchaEnabled, setCaptchaEnabled] = useState(false)
+
   const {
+    watch,
     register,
     handleSubmit,
     reset,
@@ -24,12 +30,21 @@ export default function ContactForm() {
     defaultValues: {
       name: '',
       email: '',
-      message: ''
+      message: '',
+      captcha: ''
     }
   })
 
+  const [email] = watch(['email'])
+
+  if (email && !captchaEnabled) {
+    setCaptchaEnabled(true)
+  }
+
   const processForm: SubmitHandler<Inputs> = async data => {
-    const result = await sendEmail(data)
+    const captcha = await captchaRef.current?.executeAsync()
+
+    const result = await sendEmail({ ...data, captcha })
 
     if (result?.error) {
       toast.error('An error occurred! Please try again.')
@@ -150,6 +165,14 @@ export default function ContactForm() {
               privacy&nbsp;policy.
             </Link>
           </p>
+
+          {captchaEnabled && (
+            <ReCAPTCHA
+              ref={captchaRef}
+              size='invisible'
+              sitekey={process.env.NEXT_PUBLIC_CAPTCHA!}
+            />
+          )}
         </form>
       </div>
     </section>

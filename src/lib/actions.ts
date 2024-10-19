@@ -8,6 +8,26 @@ import ContactFormEmail from '@/emails/contact-form-email'
 type ContactFormInputs = z.infer<typeof ContactFormSchema>
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+async function checkRecaptcha(recaptcha: string): Promise<boolean> {
+  const response = await fetch(
+    'https://www.google.com/recaptcha/api/siteverify',
+    {
+      method: 'POST',
+      headers: { 'Content-type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        secret: process.env.RECAPTCHA_SECRET!,
+        response: recaptcha
+      })
+    }
+  ).then(res => res.json())
+
+  if (!response.success) {
+    throw new Error('Failed to validate captcha')
+  }
+
+  return response.success
+}
+
 export async function sendEmail(data: ContactFormInputs) {
   const result = ContactFormSchema.safeParse(data)
 
@@ -16,6 +36,8 @@ export async function sendEmail(data: ContactFormInputs) {
   }
 
   try {
+    checkRecaptcha(result.data.captcha)
+
     const { name, email, message } = result.data
     const { data, error } = await resend.emails.send({
       from: `${process.env.CONTACT_SENDER_NAME} <${process.env.CONTACT_SENDER_EMAIL}>`,
