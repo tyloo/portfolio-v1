@@ -1,20 +1,38 @@
+'use server'
+
 import { z } from 'zod'
-import { ContactFormSchema } from './schemas'
+import { Resend } from 'resend'
+import { ContactFormSchema, NewsletterFormSchema } from '@/lib/schemas'
+import ContactFormEmail from '@/emails/contact-form-email'
 
 type ContactFormInputs = z.infer<typeof ContactFormSchema>
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function sendEmail(data: ContactFormInputs) {
-  const response = await fetch('/api/send-email', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
+  const result = ContactFormSchema.safeParse(data)
 
-  if (!response.ok) {
-    return { error: true }
+  if (result.error) {
+    return { error: result.error.format() }
   }
 
-  return { error: false }
+  try {
+    const { name, email, message } = result.data
+    const { data, error } = await resend.emails.send({
+      from: `${process.env.CONTACT_SENDER_NAME} <${process.env.CONTACT_SENDER_EMAIL}>`,
+      to: [
+        `${process.env.CONTACT_RECIPIENT_NAME} <${process.env.CONTACT_RECIPIENT_EMAIL}>`
+      ],
+      subject: '[Tyloo.fr] Contact form submission',
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+      react: ContactFormEmail({ name, email, message })
+    })
+
+    if (!data || error) {
+      throw new Error('Failed to send email')
+    }
+
+    return { success: true }
+  } catch (error) {
+    return { error }
+  }
 }
