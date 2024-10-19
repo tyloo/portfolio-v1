@@ -42,7 +42,7 @@ export default function ContactForm() {
   }
 
   const processForm: SubmitHandler<Inputs> = async data => {
-    const captcha = await captchaRef.current?.executeAsync()
+    const captcha = (await captchaRef.current?.executeAsync()) as string
 
     const result = await sendEmail({ ...data, captcha })
 
