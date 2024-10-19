@@ -1,11 +1,5 @@
 import Link from 'next/link'
 import ThemeToggle from '@/components/theme-toggle'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from '@/components/ui/tooltip'
 
 export default function Header() {
   return (
