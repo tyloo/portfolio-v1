@@ -11,5 +11,6 @@ export const ContactFormSchema = z.object({
 })
 
 export const NewsletterFormSchema = z.object({
-  email: z.string().email('Invalid email.')
+  email: z.string().email('Invalid email.'),
+  captcha: z.string().min(1, 'Captcha is required.')
 })

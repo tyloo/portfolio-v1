@@ -16,9 +16,9 @@ export default function Intro() {
       </div>
       <div className='relative'>
         <Image
-          className='flex-1 rounded-lg'
           src={authorImage}
           alt="Julien 'Tyloo' Bonvarlet"
+          className='flex-1 rounded-lg'
           width={200}
           height={267}
           priority
