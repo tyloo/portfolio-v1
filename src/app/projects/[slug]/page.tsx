@@ -13,11 +13,12 @@ export async function generateStaticParams() {
   return slugs
 }
 
-export default async function ProjectPage({
-  params
-}: {
-  params: { slug: string }
-}) {
+export default async function ProjectPage(
+  props: {
+    params: Promise<{ slug: string }>
+  }
+) {
+  const params = await props.params;
   const { slug } = params
   const project = await getProjectBySlug(slug)
 
