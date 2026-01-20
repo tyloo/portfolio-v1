@@ -47,7 +47,7 @@ export async function sendEmail(ContactFormInput: ContactFormInputs) {
       ],
       subject: '[Tyloo.fr] Contact form submission',
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
-      react: ContactFormEmail({ name, email, message })
+      react: await ContactFormEmail({ name, email, message })
     })
 
     if (!data || error) {
